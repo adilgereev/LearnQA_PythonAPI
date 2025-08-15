@@ -18,5 +18,3 @@ for password in splash_data:
     if response2.text != 'You are NOT authorized':
         print(response2.text)
         print(password)
-
-
