@@ -1,11 +1,15 @@
 import time
 
+import allure
+
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 
 
+@allure.epic("Delete cases")
 class TestUserDelete(BaseCase):
+    @allure.title("Delete main user")
     def test_delete_main_user(self):
         # LOGIN
         data = {
@@ -32,6 +36,7 @@ class TestUserDelete(BaseCase):
             "Not error message after delete"
         )
 
+    @allure.title("Delete user")
     def test_delete_user(self):
         # REGISTER
         data = self.prepare_registration_data()
@@ -73,6 +78,7 @@ class TestUserDelete(BaseCase):
         Assertions.assert_status_code(response4, 404)
         assert response4.content.decode("utf-8") == "User not found"
 
+    @allure.title("Delete user as another user")
     def test_delete_user_as_another_user(self):
         # REGISTER 1 USER
         data_user1 = self.prepare_registration_data()

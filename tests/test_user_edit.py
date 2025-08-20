@@ -1,11 +1,16 @@
 import time
 
+import allure
+
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 
 
+@allure.epic("Edit user")
 class TestUserEdit(BaseCase):
+
+    @allure.title("Edit just created user")
     def test_edit_just_created_user(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -53,7 +58,7 @@ class TestUserEdit(BaseCase):
             new_name,
             "Wrong name of the user after edit")
 
-    # Попытаемся изменить данные пользователя, будучи неавторизованными
+    @allure.title("Edit user not auth")
     def test_edit_user_not_auth(self):
         # REGISTER
         data = self.prepare_registration_data()
@@ -77,7 +82,7 @@ class TestUserEdit(BaseCase):
             "Auth token not supplied",
             f"Not error message after edit. Actual response - {response2.text}")
 
-    # Попытаемся изменить данные пользователя, будучи авторизованными другим пользователем
+    @allure.title("Edit user auth as another user")
     def test_edit_user_auth_as_another_user(self):
         # REGISTER 1 USER
         data_user1 = self.prepare_registration_data()
@@ -123,7 +128,7 @@ class TestUserEdit(BaseCase):
             'This user can only edit their own data.',
             f"Not error message after edit. Actual response: {response4.text}")
 
-        # Попытаемся изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @
+    @allure.title("Edit user email without at sign")
     def test_edit_user_email_without_at_sign(self):
         # REGISTER
         data = self.prepare_registration_data()
@@ -161,7 +166,7 @@ class TestUserEdit(BaseCase):
             "Invalid email format",
             f"Not error message after edit. Actual response: {response3.text}")
 
-    # Попытаемся изменить firstName пользователя, будучи авторизованными тем же пользователем, на очень короткое значение в один символ
+    @allure.title("Edit user short name")
     def test_edit_user_short_name(self):
         # REGISTER
         data = self.prepare_registration_data()
