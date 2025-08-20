@@ -1,3 +1,5 @@
+import time
+
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
@@ -87,6 +89,7 @@ class TestUserEdit(BaseCase):
         user_id1 = self.get_json_value(response1, "id")
 
         # REGISTER 2 USER
+        time.sleep(1)
         data_user2 = self.prepare_registration_data()
         response2 = MyRequests.post("/user/", data=data_user2)
 
