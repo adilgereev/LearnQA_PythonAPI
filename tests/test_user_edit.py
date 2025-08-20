@@ -93,7 +93,7 @@ class TestUserEdit(BaseCase):
         Assertions.assert_status_code(response2, 200)
         Assertions.assert_json_has_key(response2, "id")
 
-        # LOGIN 1 USER
+        # LOGIN 2 USER
         login_data = {
             'email': data_user2['email'],
             'password': data_user2['password']
