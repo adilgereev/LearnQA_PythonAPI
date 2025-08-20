@@ -73,7 +73,7 @@ class TestUserEdit(BaseCase):
             response2,
             "error",
             "Auth token not supplied",
-            "Not error message after edit")
+            f"Not error message after edit. Actual response - {response2.text}")
 
     # Попытаемся изменить данные пользователя, будучи авторизованными другим пользователем
     def test_edit_user_auth_as_another_user(self):
@@ -113,12 +113,12 @@ class TestUserEdit(BaseCase):
             cookies={"auth_sid": auth_sid},
             data={"firstName": new_name})
 
-        Assertions.assert_status_code(response4, 200)
+        Assertions.assert_status_code(response4, 400)
         Assertions.assert_json_value_by_name(
             response4,
-            "success",
-            '!',
-            "Not success message after edit")
+            "error",
+            'This user can only edit their own data.',
+            f"Not error message after edit. Actual response: {response4.text}")
 
         # Попытаемся изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @
     def test_edit_user_email_without_at_sign(self):
@@ -156,7 +156,7 @@ class TestUserEdit(BaseCase):
             response3,
             "error",
             "Invalid email format",
-            "Not error message after edit")
+            f"Not error message after edit. Actual response: {response3.text}")
 
     # Попытаемся изменить firstName пользователя, будучи авторизованными тем же пользователем, на очень короткое значение в один символ
     def test_edit_user_short_name(self):
@@ -194,4 +194,4 @@ class TestUserEdit(BaseCase):
             response3,
             "error",
             "The value for field `firstName` is too short",
-            "Not error message after edit")
+            f"Not error message after edit. Actual response: {response3.text}")
